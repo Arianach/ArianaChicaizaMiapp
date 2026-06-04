@@ -34,6 +34,17 @@ $this->params['breadcrumbs'][] = $this->title;
             'añopublicacion',
             'Autores_idautores',
             'Categorias_idCategoria',
+             //'Imagen',
+             [
+               'attribute' => 'Imagen',
+                'format' => 'html',
+                'value' => function ($model) {
+                
+                    return $model->imagen 
+                    ? Html::img(Yii::getAlias('@web/') . $model->imagen, ['style' => 'width:100px; border-radius:8px;'])
+                    : '<span style="color:red;">(no image)</span>';
+                },
+            ],
         ],
     ]) ?>
 

@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\models\User;
 use Yii;
 
 /**
@@ -37,7 +38,7 @@ class Prestamos extends \yii\db\ActiveRecord
             [['Usuarios_idusuario'], 'required'],
             [['Usuarios_idusuario'], 'integer'],
             [['fechaprestamo', 'fechadevolucion'], 'string', 'max' => 45],
-            [['Usuarios_idusuario'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::class, 'targetAttribute' => ['Usuarios_idusuario' => 'idusuario']],
+            [['Usuarios_idusuario'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['Usuarios_idusuario' => 'id']],
         ];
     }
 
@@ -71,7 +72,7 @@ class Prestamos extends \yii\db\ActiveRecord
      */
     public function getUsuariosIdusuario()
     {
-        return $this->hasOne(Usuarios::class, ['idusuario' => 'Usuarios_idusuario']);
+        return $this->hasOne(User::class, ['id' => 'Usuarios_idusuario']);
     }
 
     /**

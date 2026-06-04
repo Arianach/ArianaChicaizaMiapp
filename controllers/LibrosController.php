@@ -7,6 +7,8 @@ use app\models\LibrosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
+use Yii;
 
 /**
  * LibrosController implements the CRUD actions for Libros model.
@@ -68,17 +70,33 @@ class LibrosController extends Controller
     public function actionCreate()
     {
         $model = new Libros();
+        $message = '';
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'idLibros' => $model->idLibros]);
+        $transaction = Yii::$app->db->beginTransaction();
+
+            try{
+            if($model->load($this->request->post())){
+                $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+                if($model->save() && (!$model->imageFile || $model->upload())){
+                    $transaction->commit();
+                    return $this->redirect(['view', 'idLibros' => $model->idLibros]);
+                }else{
+                    $message = 'Error al guardar  el  libro ';
+                    $transaction->rollBack();
+                }
             }
+        }catch(\Exception $e){
+            $transaction->rollBack();
+            $message = 'Error al guardar  el libro';
+        }
         } else {
             $model->loadDefaultValues();
         }
 
         return $this->render('create', [
             'model' => $model,
+            'message' => $message,
         ]);
     }
 
@@ -92,13 +110,21 @@ class LibrosController extends Controller
     public function actionUpdate($idLibros)
     {
         $model = $this->findModel($idLibros);
+        $message = '';
+
+        if($this->request->isPost && $model->load($this->request->post())){
+        $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'idLibros' => $model->idLibros]);
+        }else{
+            $message = 'Error al guardar  el libro';
         }
+      }
 
         return $this->render('update', [
             'model' => $model,
+            'message' => $message,
         ]);
     }
 

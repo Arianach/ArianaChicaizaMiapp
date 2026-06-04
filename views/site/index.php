@@ -2,54 +2,77 @@
 
 /** @var yii\web\View $this */
 
-$this->title = 'My Yii Application';
+$this->title = 'Mi Biblioteca';
 ?>
 <div class="site-index">
 
-    <div class="jumbotron text-center bg-transparent mt-5 mb-5">
-        <h1 class="display-4">Congratulations! - </h1>
-
-        <h3 class="text-danger">Hola esta es mi primera pagina</h3>
-
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="https://www.yiiframework.com">Get started with Yii</a></p>
-    </div>
-
-    <div class="body-content">
-
-        <div class="row">
-            <div class="col-lg-4 mb-3">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="https://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
+    <!-- HERO -->
+    <div class="biblioteca-hero">
+        <div class="hero-inner">
+            <div class="hero-badge">
+                <i class="ti ti-book"></i> Sistema de Gestión
             </div>
-            <div class="col-lg-4 mb-3">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="https://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="https://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
+            <h1>Tu biblioteca,<br><span class="hero-accent">organizada y accesible</span></h1>
+            <p class="hero-lead">Gestiona libros, autores, préstamos y usuarios desde un solo lugar. Rápido, simple y confiable.</p>
+            <div class="hero-actions">
+                <a class="btn-primary-lib" href="/libros/index">
+                    <i class="ti ti-arrow-right"></i> Explorar catálogo
+                </a>
+                <a class="btn-outline-lib" href="">
+                    Ver documentación
+                </a>
             </div>
         </div>
-
     </div>
+
+    <!-- ESTADÍSTICAS -->
+    <div class="biblioteca-stats">
+        <div class="stat-item">
+            <div class="stat-num">2,400+</div>
+            <div class="stat-label">Libros registrados</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-num">340</div>
+            <div class="stat-label">Autores</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-num">180</div>
+            <div class="stat-label">Préstamos activos</div>
+        </div>
+    </div>
+
+    <!-- CARDS DE MÓDULOS -->
+    <div class="biblioteca-features">
+        <div class="feat-grid">
+
+            <div class="feat-card">
+                <div class="feat-icon">
+                    <i class="ti ti-books"></i>
+                </div>
+                <h3>Catálogo de libros</h3>
+                <p>Consulta, registra y organiza el inventario completo de la biblioteca por categorías y autores.</p>
+                <a class="feat-link" href="/libros/index">Ver catálogo &rarr;</a>
+            </div>
+
+            <div class="feat-card">
+                <div class="feat-icon">
+                    <i class="ti ti-users"></i>
+                </div>
+                <h3>Gestión de usuarios</h3>
+                <p>Administra cuentas, roles y permisos para estudiantes, bibliotecarios y administradores.</p>
+                <a class="feat-link" href="/user/index">Ver usuarios &rarr;</a>
+            </div>
+
+            <div class="feat-card">
+                <div class="feat-icon">
+                    <i class="ti ti-arrows-exchange"></i>
+                </div>
+                <h3>Control de préstamos</h3>
+                <p>Registra devoluciones y préstamos activos con seguimiento completo y alertas de vencimiento.</p>
+                <a class="feat-link" href="/prestamos/index">Ver préstamos &rarr;</a>
+            </div>
+
+        </div>
+    </div>
+
 </div>

@@ -18,7 +18,7 @@ class LibrosSearch extends Libros
     {
         return [
             [['idLibros', 'Autores_idautores', 'Categorias_idCategoria'], 'integer'],
-            [['titulo', 'añopublicacion'], 'safe'],
+            [['titulo', 'añopublicacion','imagen'], 'safe'],
         ];
     }
 
@@ -65,7 +65,8 @@ class LibrosSearch extends Libros
             'Categorias_idCategoria' => $this->Categorias_idCategoria,
         ]);
 
-        $query->andFilterWhere(['like', 'titulo', $this->titulo]);
+        $query->andFilterWhere(['like', 'titulo', $this->titulo])
+        ->andFilterWhere(['like', 'imagen', $this->imagen]);
 
         return $dataProvider;
     }

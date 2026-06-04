@@ -19,6 +19,7 @@ use Yii;
  */
 class Libros extends \yii\db\ActiveRecord
 {
+    public $imageFile;
 
 
     /**
@@ -40,8 +41,10 @@ class Libros extends \yii\db\ActiveRecord
             [['Autores_idautores', 'Categorias_idCategoria'], 'required'],
             [['Autores_idautores', 'Categorias_idCategoria'], 'integer'],
             [['titulo'], 'string', 'max' => 45],
+            [['imagen'], 'string', 'max' => 255],
             [['Autores_idautores'], 'exist', 'skipOnError' => true, 'targetClass' => Autores::class, 'targetAttribute' => ['Autores_idautores' => 'idautores']],
             [['Categorias_idCategoria'], 'exist', 'skipOnError' => true, 'targetClass' => Categorias::class, 'targetAttribute' => ['Categorias_idCategoria' => 'idCategoria']],
+            [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
         ];
     }
 
@@ -56,8 +59,60 @@ class Libros extends \yii\db\ActiveRecord
             'añopublicacion' => Yii::t('app', 'Añopublicacion'),
             'Autores_idautores' => Yii::t('app', 'Autores Idautores'),
             'Categorias_idCategoria' => Yii::t('app', 'Categorias Id Categoria'),
+            'imagen' => Yii::t('app', 'imagen'),
         ];
     }
+    public function upload()
+  {
+    if ($this->validate()) {
+        // Guardar primero si es un nuevo registro (para obtener id)
+        if ($this->isNewRecord) {
+            if (!$this->save(false)) {
+                return false;
+            }
+        }
+
+        if ($this->imageFile instanceof \yii\web\UploadedFile) {
+            // Nombre único del archivo
+            $filename = $this->idLibros . '_libros_' . date('Ymd_His') . '.' . $this->imageFile->extension;
+
+            // Ruta completa donde se guardará (carpeta: imagen)
+            $path = Yii::getAlias('@webroot/imagen/') . $filename;
+
+            // Crear carpeta si no existe
+            if (!file_exists(dirname($path))) {
+                mkdir(dirname($path), 0777, true);
+            }
+
+            // Guardar el archivo físico
+            if ($this->imageFile->saveAs($path)) {
+                // Eliminar imagen anterior si existe y es diferente
+                if ($this->imagen && $this->imagen !== 'imagen/' . $filename) {
+                    $this->deleteImagen();
+                }
+
+                // Guardar ruta en la base de datos
+                $this->imagen = 'imagen/' . $filename;
+            }
+        }
+
+        // Guardar los cambios en la base de datos
+        return $this->save(false);
+    }
+
+    return false;
+ }   
+ public function deleteImagen()
+{
+    $file = Yii::getAlias('@webroot/') . $this->imagen;
+    if (file_exists($file)) {
+        unlink($file);
+    }
+}
+
+
+
+
 
     /**
      * Gets query for [[AutoresIdautores]].
